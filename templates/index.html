@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <!-- MaterializeCSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h3 class="center-align">Task Tracker</h3>
+
+        <!-- Form to add new tasks -->
+        <div class="row">
+            <form class="col s12" method="POST" action="{{ url_for('add_task') }}">
+                <div class="input-field col s10">
+                    <input id="description" type="text" name="description" required>
+                    <label for="description">Task Description</label>
+                </div>
+                <div class="input-field col s2">
+                    <button class="btn waves-effect waves-light" type="submit">Add Task</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Display tasks -->
+        <ul class="collection">
+            {% for task in tasks %}
+            <li class="collection-item">
+                <span class="{% if task[2] %}task-completed{% endif %}">{{ task[1] }}</span>
+                <a href="{{ url_for('complete_task', task_id=task[0]) }}" class="secondary-content">
+                    <i class="material-icons">check</i>
+                </a>
+                <a href="{{ url_for('delete_task', task_id=task[0]) }}" class="secondary-content">
+                    <i class="material-icons">delete</i>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Materialize JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>
